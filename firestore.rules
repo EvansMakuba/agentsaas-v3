@@ -1,0 +1,23 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+    // The 'users' collection
+    match /users/{userId} {
+      // A user can only read or write to their OWN document.
+      // `request.auth.uid` is the ID from the verified JWT, which our backend sends.
+      // This rule prevents one user from ever seeing or changing another user's data.
+      allow read, update, delete: if request.auth.uid == userId;
+
+      // Anyone can CREATE their own user document (e.g., when they set their role).
+      allow create: if request.auth.uid == userId;
+    }
+
+    // Add rules for other collections as we create them...
+    // For example, for 'campaigns':
+    // match /campaigns/{campaignId} {
+    //   allow read, write: if request.auth.uid == resource.data.brand_user_id;
+    // }
+  }
+}

@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # Redis: The message broker that holds tasks
+  redis:
+    image: "redis:7-alpine"
+    ports:
+      - "6379:6379"
+
+  # Flask API Server (our existing app.py)
+  api:
+    build: .
+    command: gunicorn --bind 0.0.0.0:5000 app:app --log-level info
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+
+  # Celery Beat: The scheduler that runs our orchestrator
+  beat:
+    build: .
+    command: celery -A celery_beat beat -l info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+
+  # Celery Worker: The process that runs our AI tasks
+  worker:
+    build: .
+    command: celery -A celery_app worker -l info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis

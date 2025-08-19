@@ -1,0 +1,18 @@
+# Ignore the Python virtual environment
+.venv/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore Git directory
+.git/
+
+# Ignore IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+
+# Ignore Node.js dependencies from the frontend
+frontend/node_modules/
+frontend/.next/

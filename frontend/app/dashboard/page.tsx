@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
-// --- IMPORT our new, dedicated dashboard components ---
+// Import our dedicated dashboard components
 import BrandDashboard from './brand/page';
 import ExecutorDashboard from './executor/page';
 
@@ -28,11 +28,14 @@ export default function DashboardRouterPage() {
 
   useEffect(() => {
     const fetchProfile = async () => {
+      // Wait for the Clerk session to be loaded before we can get a token
       if (!isLoaded) return;
 
+      setIsLoading(true);
       try {
         const token = await getToken();
         if (!token) {
+          // If no token, it's a side effect, so we redirect here.
           router.push('/sign-in');
           return;
         }
@@ -46,12 +49,16 @@ export default function DashboardRouterPage() {
         }
         
         const data: UserProfile = await response.json();
-
+        
+        // --- THIS IS THE CRITICAL FIX ---
+        // If the user has no role, it's a side effect that requires a redirect.
+        // We handle it here, inside the useEffect hook.
         if (!data.role) {
           router.push('/role-selection');
-          return;
+          return; // Stop further execution in this hook
         }
 
+        // If everything is okay, we set the profile state.
         setProfile(data);
       } catch (err: any) {
         setError(err.message);
@@ -61,7 +68,9 @@ export default function DashboardRouterPage() {
     };
 
     fetchProfile();
-  }, [isLoaded, getToken, router]);
+  }, [isLoaded, getToken, router]); // The effect re-runs if these values change
+
+  // --- The Render Logic is now much simpler ---
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -71,14 +80,16 @@ export default function DashboardRouterPage() {
     return <div className="text-center text-red-400 p-10">Error: {error}</div>;
   }
 
-  // The switch now renders our full components, which will be correctly styled.
-  switch (profile?.role) {
-    case 'brand':
-      return <BrandDashboard />;
-    case 'executor':
-      return <ExecutorDashboard />;
-    default:
-      router.push('/role-selection');
-      return <LoadingSpinner />; // Show loading while redirecting
+  // By the time we get here, we are GUARANTEED to have a profile with a role.
+  // The useEffect hook has already handled the cases where a redirect is needed.
+  if (profile?.role === 'brand') {
+    return <BrandDashboard />;
   }
+
+  if (profile?.role === 'executor') {
+    return <ExecutorDashboard />;
+  }
+
+  // This fallback is now just a safety net and should rarely, if ever, be seen.
+  return <LoadingSpinner />;
 }

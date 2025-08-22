@@ -1,6 +1,13 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
+# --- ADD THIS BLOCK ---
+# Install tzdata to handle timezone settings and help with time synchronization,
+# which is crucial for SSL/TLS certificate validation.
+ENV TZ=Etc/UTC
+RUN apt-get update && apt-get install -y tzdata && rm -rf /var/lib/apt/lists/*
+# --- END BLOCK ---
+
 # Set the working directory in the container
 WORKDIR /app
 

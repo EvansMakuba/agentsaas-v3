@@ -1,17 +1,22 @@
-// authMiddleware is a helper from Clerk that does all the heavy listing  of checking the user's session.
-// publicRoutes: This is our "guest list". Any route listed here can be visisted by the public. We've allowd /sign-in and /sign-up. All other routes will now require a user to be looged in.
-
-// The import name has been changed from authMiddleware to clerkMiddleware
 import { clerkMiddleware } from "@clerk/nextjs/server";
 
-// The function call has also been changed to match
+// This is the recommended way to configure the middleware
 export default clerkMiddleware({
-  // Define the routes that can be accessed by anyone, even if they are not signed in.
-  // We need to make our sign-in and sign-up pages public.
-  publicRoutes: ["/sign-in", "/sign-up"],
+  // Add all public routes here. These can be visited by anyone.
+  publicRoutes: [
+    "/", // The homepage
+    "/api/webhooks/clerk", // The webhook for Clerk to talk to our app
+  ],
+  
+  // Add routes that should be ignored by the middleware entirely.
+  // This is useful for static assets or API routes that have their own auth.
+  ignoredRoutes: [
+    // You can add routes here if needed in the future
+  ],
 });
 
 export const config = {
-  // This part remains exactly the same.
+  // This matcher ensures the middleware runs on all routes except for
+  // internal Next.js routes and static files.
   matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };

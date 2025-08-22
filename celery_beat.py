@@ -6,15 +6,19 @@ from celery_app import celery
 
 # This is where we define all our scheduled tasks.
 celery.conf.beat_schedule = {
-    # The name of the schedule entry
     'run-campaign-orchestrator-every-5-minutes': {
-        # The name of the task to run (we will create this in tasks.py)
         'task': 'tasks.campaign_orchestrator',
-        # The schedule. crontab(minute='*/5') means "run every 5 minutes".
         'schedule': crontab(minute='*/5'),
     },
-    # We can add more scheduled tasks here in the future,
-    # e.g., for syncing executor karma or analyzing performance.
+    # --- FUTURE ADDITIONS ---
+    # 'sync-executor-karma-every-hour': {
+    #     'task': 'tasks.sync_all_executor_karma', # A new task we would create
+    #     'schedule': crontab(minute='0'), # Runs at the start of every hour
+    # },
+    # 'analyze-engagement-velocity-every-30-minutes': {
+    #     'task': 'tasks.analyze_engagement_velocity', # Another new task
+    #     'schedule': crontab(minute='*/30'),
+    # },
 }
 
 celery.conf.timezone = 'UTC'

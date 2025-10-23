@@ -34,6 +34,7 @@ export default function DashboardRouterPage() {
       setIsLoading(true);
       try {
         const token = await getToken();
+        
         if (!token) {
           // If no token, it's a side effect, so we redirect here.
           router.push('/sign-in');

@@ -4,11 +4,11 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from '@clerk/themes';
 import "./globals.css";
 
-const inter = localFont({
+/*const inter = localFont({
   src: './fonts/Inter-VariableFont_opsz,wght.ttf',
   display: 'swap',
   variable: '--font-inter',
-})
+})*/
 
 export const metadata: Metadata = {
   title: "AgentSaaS v3",
@@ -21,9 +21,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{ baseTheme: dark }}>
+    <ClerkProvider appearance={{ baseTheme: dark }} waitlistUrl="/">
       <html lang="en" className="h-full">
-        <body className={`${inter.variable} h-full bg-gray-900 text-gray-100 font-sans`}>
+        <body className=/*{`${inter.variable}*/
+         {`h-full bg-gray-900 text-gray-100 font-sans`}>
           {children}
         </body>
       </html>

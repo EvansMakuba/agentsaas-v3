@@ -1,9 +1,9 @@
 import os
 from dotenv import load_dotenv
-load_dotenv('../.env')
+load_dotenv()
 
 documentation = {
-    "7-days-tanzania-classic-safari":"https://www.beyondtheplainssafaris.com/7-days-tanzania-classic-safari"
+    "agent_team":"https://google.github.io/adk-docs/tutorials/agent-team/"
 }
 
 from tavily import TavilyClient

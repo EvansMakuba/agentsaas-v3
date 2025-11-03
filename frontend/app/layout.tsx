@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import localFont from 'next/font/local';
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from '@clerk/themes';

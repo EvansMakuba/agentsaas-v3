@@ -58,6 +58,7 @@ const RedditCredsForm = () => {
       // Clear the form on success
       setUsername('');
       setPassword('');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       toast.error(err.message, { id: loadingToast });
     } finally {

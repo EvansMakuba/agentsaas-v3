@@ -49,6 +49,7 @@ export default function RoleSelectionPage() {
       // If the role was set successfully, redirect the user to their dashboard
       router.push('/dashboard');
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -73,7 +74,7 @@ export default function RoleSelectionPage() {
             selectedRole === 'brand' ? 'border-blue-500 bg-blue-900/30' : 'border-gray-700 hover:border-blue-600'
           }`}
         >
-          <h2 className="text-2xl font-bold mb-2 text-white">I'm a Brand</h2>
+          <h2 className="text-2xl font-bold mb-2 text-white">Im a Brand</h2>
           <p className="text-gray-400">I want to launch AI-powered campaigns to grow my presence.</p>
         </div>
 
@@ -84,7 +85,7 @@ export default function RoleSelectionPage() {
             selectedRole === 'executor' ? 'border-green-500 bg-green-900/30' : 'border-gray-700 hover:border-green-600'
           }`}
         >
-          <h2 className="text-2xl font-bold mb-2 text-white">I'm an Executor</h2>
+          <h2 className="text-2xl font-bold mb-2 text-white">Im an Executor</h2>
           <p className="text-gray-400">I want to complete engagement tasks and earn money.</p>
         </div>
       </div>

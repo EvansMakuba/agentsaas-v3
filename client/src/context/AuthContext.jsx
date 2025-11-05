@@ -1,3 +1,4 @@
+// src/context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
@@ -5,16 +6,27 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  // Load user from localStorage on refresh
+  // Load user from localStorage on mount
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) setUser(JSON.parse(storedUser));
+    const stored = localStorage.getItem("user");
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      // Ensure stored user has an id (in case it was saved before the change)
+      setUser(parsed.id ? parsed : { ...parsed, id: Date.now() });
+    }
   }, []);
 
   const login = (userData, token) => {
+    // --------------------------------------------------------------
+    // 1. Make sure the user object ALWAYS has an `id`
+    // --------------------------------------------------------------
+    const userWithId = userData.id
+      ? userData
+      : { ...userData, id: Date.now() }; // <-- auto-generated id
+
     localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(userData));
-    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userWithId));
+    setUser(userWithId);
   };
 
   const logout = () => {

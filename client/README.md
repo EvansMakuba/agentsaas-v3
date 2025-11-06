@@ -1,16 +1,63 @@
 # React + Vite
+# MERN stack application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# Client setup
+1. Navigate to the client directory
+cd agentsaas-v3/client
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. Install dependencies
+npm install tailwindcss axios framer-motion lucide-react react react-dom react-icons react-router-dom socket.io-client
 
-## React Compiler
+1. Start app
+npm run dev
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Backend setup (Server)
+1. Navigate to the server directory
+cd agentsaas-v3/server
+
+2. Install dependencies
+# Production Dependencies
+npm install bcryptjs body-parser cors dotenv express jsonwebtoken mongoose nodemailer socket.io validator
+
+# Developer Dependencies (for automatic restarts during development)
+npm install --save-dev nodemon
+
+3. Configure package.json
+The package.json file needs to be configured to use server.js as the main entry point and set up the start and dev scripts
+Make sure your scripts section looks like this:
+
+"scripts": {
+  "start": "node server.js",
+  "dev": "nodemon server.js"
+},
+
+4. Environment variables (.env)
+Create a file named .env in the agentsaas-v3/server directory and add the secret keys and database connection string
+Pick all the commented variables required in server/controllers/authController.js - they are at the bottom of the file(Remember to delete after use just so we don't get ourselves in a mess)
+
+5. Start the development server
+npm run dev - the server runs at port 5000
+
+6. Database Access (MongoDB Atlas)
+The project uses MongoDB Atlas for data storage. Here's how you can check the database state:
+
+(i).    Log in to MongoDB Atlas:
+
+(ii).   Navigate to the MongoDB Atlas website.
+
+(iii).  Log in using your credentials.
+
+(iv).   Navigate to the Clusters:
+
+(v).    Once logged in, go to the Database section (or the Clusters view).
+
+(vi).   Find the cluster that the MONGODB_URI connects to.
+
+(vii).  Browse Collections:
+
+(viii). Click the Browse Collections button for your connected cluster.
+
+(ix).   Here you can view all the databases and collections, inspect the documents, and verify the data being stored by the application.

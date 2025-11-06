@@ -110,7 +110,7 @@ export const resetPassword = async (req, res) => {
 };
 
 // PORT=5000
-// MONGO_URI=mongodb://localhost:27017/swarm-engage
+// MONGO_URI=mongodb+srv://makubaakalaevans_db_user:O0tVZEy4Th4umPBX@cluster0.mxeue2u.mongodb.net/?appName=Cluster0
 // JWT_SECRET=72c114973b060ced5710605481c1ce31689884b15de38888ef87c413cd62e19b2c8b13f393077cf0cd9089f61b4351c0f45f52ccc1398ab02c6441811112886e
 // JWT_EXPIRES_IN=7d
 // EMAIL_USER=youremail@gmail.com
